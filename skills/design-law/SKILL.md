@@ -97,6 +97,11 @@ a component is a review failure.
   300–500ms, scene 600–900ms; >1s only scroll-scrubbed.
 - Stagger lists 60–80ms, 24px rise+fade. **Scrub narrative (GSAP ScrollTrigger
   + Lenis), trigger UI (Framer Motion).** Shared-element morphs via `layoutId`.
+- **Any gesture-driven surface (drag, swipe, sheet/drawer, momentum, translucent
+  chrome) — load [[apple-design]] first.** It supplies the physics this section
+  only summarizes: damping/response spring params, interruptibility (animate
+  from the live presentation value, never the target), velocity handoff on
+  release, and momentum projection for flick-to-snap.
 - ONE hero moment per page. Exits ~60% of enter, opacity-led. Interruptible.
   `prefers-reduced-motion` → fades only. Animate transform/opacity/canvas ONLY.
 - Signature micro-interactions: hover lift −2px + border brighten; press

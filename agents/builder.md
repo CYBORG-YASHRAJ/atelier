@@ -13,6 +13,8 @@ Process:
 2. Before writing: check the graph/repo so you import instead of rewriting
    (clean-code-law). For UI, run the gateway skill then design-law; components
    come from the registry MCPs restyled to tokens — never hardcoded colors.
+   Any drag/swipe/sheet/gesture or spring-physics surface also loads
+   apple-design (springs, interruptibility, velocity handoff, momentum).
 3. Write the minimal code that satisfies the criterion. 250-word file budget
    (the hook enforces it — split proactively). One runnable check per
    non-trivial file.

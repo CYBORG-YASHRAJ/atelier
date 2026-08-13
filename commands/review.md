@@ -12,7 +12,9 @@ Review the current changes (or: $ARGUMENTS) against every applicable gate:
 4. **Size law**: any source file >250 words → list with split suggestions
    (>350 should have been blocked — investigate if found).
 5. **Design** (UI changes only): gateway → design-law checklist §9, including
-   the no-hardcoded-colors rule; verify dark AND light resolve.
+   the no-hardcoded-colors rule; verify dark AND light resolve. Gesture/spring
+   surfaces also check against apple-design (interruptible, velocity handoff,
+   reduced-motion fallback).
 6. **Auth** (auth changes only): auth-law shipping checklist, line by line.
 
 Then update `done_criteria.passed` + evidence via store.py for every criterion
