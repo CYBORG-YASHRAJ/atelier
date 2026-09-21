@@ -1,43 +1,67 @@
 name: ci
 on:
-  push: { branches: [main] }
+  push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      mcp_smoke:
+        description: Download and smoke-test optional registry MCPs
+        type: boolean
+        default: false
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Package wiring
+        run: python scripts/check_package.py
+      - name: Skill and host metadata
+        run: python scripts/validate_skills.py
       - name: Hook self-checks
         run: |
           python hooks/file_size_gate.py --test
           python hooks/session_start.py --test
+      - name: Source word budget
+        run: python scripts/size_audit.py .
+      - uses: actions/setup-node@v4
+        if: inputs.mcp_smoke
+        with:
+          node-version: "22"
+      - name: Optional live MCP discovery
+        if: inputs.mcp_smoke
+        run: python scripts/mcp_smoke.py .
 
-      - name: Store init + queries (schema & seed valid)
-        run: |
-          python db/store.py init
-          python db/store.py rules design | grep -q theming
-          python db/store.py map bug | grep -q principal-mind
-          python db/store.py registry component | grep -q shadcn
-
-      - name: Manifests are valid JSON
-        run: |
-          python -c "import json; json.load(open('.claude-plugin/plugin.json')); json.load(open('.claude-plugin/marketplace.json')); json.load(open('hooks/hooks.json'))"
-
-      - name: Own law — code files within word budget
-        run: |
-          python - <<'EOF'
-          import os, sys
-          bad = []
-          for root, _, files in os.walk('.'):
-              if any(p in root for p in ('.git', 'node_modules')): continue
-              for f in files:
-                  if os.path.splitext(f)[1] in ('.py', '.tsx', '.ts', '.js'):
-                      p = os.path.join(root, f)
-                      w = len(open(p, encoding='utf-8', errors='ignore').read().split())
-                      if w > 350: bad.append(f"{p}: {w}")
-          if bad: sys.exit("over hard cap: " + ", ".join(bad))
-          EOF
+  browser-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run audit:site
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7

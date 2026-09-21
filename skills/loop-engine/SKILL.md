@@ -23,7 +23,7 @@ Understand → Clarify → Plan → Execute → Review → Compare vs Done-State
 
 ## 1. Understand (always first, never skipped)
 
-Read BEFORE asking: the repo, CLAUDE.md, `workspace/project.md`, the store
+Read BEFORE asking: the repo, applicable host instructions (AGENTS.md on Codex, CLAUDE.md on Claude), `workspace/project.md`, the store
 (`python <plugin>/db/store.py rules <domain>`), code-review-graph if present, and
 the web when facts are missing. **Don't hunt for framework files — query the
 map:** `python <plugin>/db/store.py map <topic>` returns exactly which
@@ -39,31 +39,25 @@ standard, state it and proceed unless overridden.
 
 ## 3. Plan (architect tier)
 
-Complex/ambiguous/architectural work → the **architect** agent (Opus) produces:
+Complex/ambiguous/architectural work → the **architect** role produces:
 the plan, the file map, risks, and a **done-state contract** — concrete,
-checkable criteria written to `plans` + `done_criteria`. Planning runs at
-maximum reasoning depth (think hard / ultrathink). The architect NEVER writes
+checkable criteria written to `plans` + `done_criteria`. Planning respects the host's configured reasoning settings. The architect NEVER writes
 production code.
 
 ## 4. Execute (builder tier)
 
-The **builder** agent (Sonnet) implements plan tasks one at a time, obeying
+The **builder** role implements plan tasks one at a time, obeying
 design-law, clean-code-law, structure-law, auth-law, security-law. Independent
 small tasks may fan out to parallel builders. Trivial mechanical edits and
-digests go to the **summarizer** (Haiku).
+digests go to the **summarizer** role.
 
-## Model routing table (automatic — the user never switches models)
+## Host routing
 
-| Task shape | Route |
-|---|---|
-| Summaries, digests, memory updates, trivial edits | summarizer (haiku) |
-| Features, refactors, tests, bug fixes | builder (sonnet) |
-| New architecture, migrations, ambiguous tradeoffs, done-state definition, final verification | architect (opus) |
-| Sonnet-plans-then-Opus-codes | ❌ forbidden — always the reverse |
+Read [the runtime contract](../../references/runtime.md). Claude agent wrappers retain their model pins. Codex uses the selected model for architect, builder, summarizer, learner and design-scout responsibilities, delegating only where supported and permitted; otherwise run sequentially. The parent coordinates state writes. Never change the user's model configuration.
 
 ## 5. Review (gates, not opinions)
 
-`/atelier:review`: ponytail pass, code-review-graph impact, lint/typecheck,
+Atelier review: ponytail pass, code-review-graph impact, lint/typecheck,
 file-size law, design-token compliance for UI, a11y/perf where relevant. Update
 `done_criteria.passed` with evidence.
 
@@ -75,8 +69,9 @@ criterion passes only when the user says so — log their words as evidence.
 
 ## Session hygiene
 
-- Deep-thinking moments (planning, design direction, migrations): max effort.
-- After a milestone or before a long build: compact the session — persist state
+- Use the host's configured model and reasoning effort.
+- After a milestone or before a long build: use host compaction only when available and appropriate — persist state
   to the store first so nothing is lost (plans and criteria live in SQLite, not
   in chat history).
 - Never poll anything, anywhere. Event-driven or one-shot timers only.
+User instructions and host permissions take precedence. Unmet criteria prevent a completion claim, but do not authorize ignoring a stop or retrying an external blocker indefinitely.

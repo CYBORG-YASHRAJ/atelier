@@ -9,15 +9,19 @@ Records results in workspace/atelier.db asset_manifest when present.
 ponytail: direct CLI; wrap as MCP/gRPC worker only if batch volume demands it.
 """
 import os, sqlite3, subprocess, sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+import runtime
 
 
 def manifest(src, out, kind, b0, b1):
-    db = os.path.join(os.getcwd(), "workspace", "atelier.db")
+    db = runtime.database()
     if os.path.exists(db):
-        c = sqlite3.connect(db)
+        c = runtime.connect(db, writable=True)
         c.execute("INSERT INTO asset_manifest (src,out,kind,bytes_before,bytes_after)"
                   " VALUES (?,?,?,?,?)", (src, out, kind, b0, b1))
         c.commit()
+        c.close()
 
 
 def webp(path, quality=82):

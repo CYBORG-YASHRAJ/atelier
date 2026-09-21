@@ -1,0 +1,41 @@
+{
+  "name": "atelier",
+  "version": "0.5.0",
+  "description": "The craftsman's framework for AI-built software: done-state loop engineering, design law, clean-code enforcement, auto model routing, SQLite memory, and self-learning — in one install.",
+  "author": {
+    "name": "Piyush Sharma (ScienHAC)",
+    "url": "https://github.com/ScienHAC"
+  },
+  "homepage": "https://github.com/INERATE/atelier",
+  "license": "MIT",
+  "keywords": [
+    "framework",
+    "design-system",
+    "loop-engineering",
+    "model-routing",
+    "clean-code",
+    "sqlite",
+    "self-learning"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Atelier",
+    "shortDescription": "Plan, build and verify software with project memory.",
+    "longDescription": "Shared design and engineering workflows, persistent SQLite contracts, learning overlays and optional component registries for Codex.",
+    "developerName": "Piyush Sharma (ScienHAC)",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/INERATE/atelier",
+    "logo": "./docs/assets/atelier.png",
+    "composerIcon": "./docs/assets/atelier-avatar.png",
+    "defaultPrompt": [
+      "Use Atelier to plan this project.",
+      "Use Atelier to build my active plan.",
+      "Use Atelier to review these changes."
+    ]
+  }
+}

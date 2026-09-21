@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Atelier — Software built against a definition of done</title>
+  <meta name="description" content="Atelier gives coding agents durable project memory, disciplined design rules, and verifiable completion criteria for software work.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://inerate.github.io/atelier/">
+  <meta property="og:title" content="Atelier — Build against a definition of done">
+  <meta property="og:description" content="Persistent plans, design law, and evidence-based release checks for coding agents.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/INERATE/atelier/main/docs/assets/atelier.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Atelier","codeRepository":"https://github.com/INERATE/atelier","license":"https://opensource.org/licenses/MIT"}</script>
+  <style>
+    :root { color-scheme: light dark; --bg:#0b0c10; --raised:#12141a; --ink:#f7f5ef; --muted:#a7a9b3; --line:#2a2d36; --accent:#ff7547; --on-accent:#1b0903; font-family:Inter,ui-sans-serif,system-ui,sans-serif }
+    * { box-sizing:border-box } html { scroll-behavior:smooth } body { margin:0; background:var(--bg); color:var(--ink); line-height:1.6 }
+    a { color:inherit } a:focus-visible { outline:3px solid var(--accent); outline-offset:4px }
+    nav,main,footer { width:min(1120px,calc(100% - 40px)); margin-inline:auto }
+    nav { display:flex; align-items:center; justify-content:space-between; height:76px; border-bottom:1px solid var(--line) }
+    .wordmark { font-weight:650; letter-spacing:.08em; text-transform:uppercase } .nav-link { color:var(--muted) }
+    main { min-height:calc(100vh - 152px); display:grid; place-items:center; padding:80px 0 }
+    .hero { width:min(820px,100%); text-align:center } .kicker { color:var(--accent); font-size:.75rem; letter-spacing:.16em; text-transform:uppercase }
+    h1 { margin:.5rem 0 1.25rem; font-size:clamp(3rem,8vw,6.75rem); line-height:.92; letter-spacing:-.055em; font-weight:600 }
+    .lead { width:min(620px,100%); margin:0 auto 2rem; color:var(--muted); font-size:clamp(1rem,2vw,1.25rem) }
+    .primary-action { display:inline-block; padding:.8rem 1.2rem; border-radius:999px; background:var(--accent); color:var(--on-accent); font-weight:700; text-decoration:none; transition:transform 180ms cubic-bezier(.16,1,.3,1) }
+    .primary-action:hover { transform:translateY(-2px) } .proof { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:72px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden }
+    .proof article { padding:24px; background:var(--raised) } .proof strong { display:block; font-size:1.65rem; font-variant-numeric:tabular-nums } .proof span { color:var(--muted); font-size:.78rem }
+    footer { padding:28px 0; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem }
+    @media (prefers-color-scheme:light) { :root { --bg:#faf9f6; --raised:#fff; --ink:#17181b; --muted:#555964; --line:#d9d8d3; --accent:#c6380d; --on-accent:#fff } }
+    @media (max-width:600px) { nav,main,footer { width:min(100% - 28px,1120px) } main { padding:56px 0 } .proof { grid-template-columns:1fr } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important } }
+  </style>
+</head>
+<body>
+  <nav aria-label="Primary"><a class="wordmark" href="/">Atelier</a><a class="nav-link" href="https://github.com/INERATE/atelier">Source</a></nav>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="kicker">A craftsman's framework</p>
+      <h1 id="hero-title">Know what done looks like.</h1>
+      <p class="lead">Give your coding agent a durable plan, a disciplined visual language, and evidence it can verify before calling the work complete.</p>
+      <a class="primary-action" href="https://github.com/INERATE/atelier">Read the source</a>
+      <div class="proof" aria-label="Atelier capabilities">
+        <article><strong>11</strong><span>complete workflows</span></article>
+        <article><strong>2</strong><span>supported coding hosts</span></article>
+        <article><strong>1</strong><span>durable project contract</span></article>
+      </div>
+    </section>
+  </main>
+  <footer>Atelier is open source under the MIT license.</footer>
+</body>
+</html>

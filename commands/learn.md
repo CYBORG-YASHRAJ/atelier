@@ -1,18 +1,7 @@
 ---
-description: Teach Atelier — ingest images, videos, URLs, code, or new skills/MCPs into self-learning overlays. Usage: /atelier:learn <paste/describe/attach references>
+description: Learn design and implementation lessons from supplied references into project overlays.
 ---
 
-Ingest these references into Atelier's self-learning layer: $ARGUMENTS
+Run Atelier learn for: $ARGUMENTS
 
-1. Gather inputs: anything attached/pasted in this conversation PLUS any new
-   files in `workspace/references/` not yet in `learning_events`
-   (`python "${CLAUDE_PLUGIN_ROOT}/db/store.py" sql "SELECT path_or_url FROM learning_events"`).
-2. Delegate to the **learner** agent — it classifies, files, extracts rules,
-   writes overlays + pointer rows + registry entries. Core files stay
-   untouched.
-3. For URLs the learner cannot fetch, use web search/fetch yourself and hand it
-   the content.
-4. Report: what was learned (per item, one line), where it lives (overlay path
-   / registry row), and that the gateway will now include it in every UI task.
-   Suggest `/atelier:promote <overlay>` for anything that should become
-   permanent, git-tracked law.
+Using the supplied CLAUDE_PLUGIN_ROOT as PLUGIN, read references/runtime.md and references/workflows/learn.md from that root. Follow the Claude adapter, preserve the selected project directory, and perform only this workflow.

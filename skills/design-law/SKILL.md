@@ -7,7 +7,9 @@ description: The Atelier Design Law — premium, industrial-grade UI. Load BEFOR
 
 When a prompt says "make it premium", it means **exactly this document**. If a
 choice isn't covered, pick the calmer, quieter option. First run the gateway
-skill — overlays in `design_guide_versions` may extend this law.
+skill — overlays in `design_guide_versions` may extend this law. Before UI code,
+read [palette inference](references/palette.md) and write the short design
+direction it requires. Public pages also load the web-quality skill.
 
 ## 1. Vocabulary (say these words, get this taste)
 
@@ -71,8 +73,7 @@ you recognize a user's explicit request — don't default into them uninvited:
 --bg:        #0A0A0B dark / #FAFAF8 light      --bg-raised: #141518 / #FFFFFF
 --ink:       #F5F5F3 / #1A1A18                 --ink-2: #9B9B98   --ink-3: #5C5C5A
 --hairline:  rgba(255,255,255,.08) / rgba(0,0,0,.08)
---accent:    THE user's ONE brand color — from intake/logo/brand; if unknown, ASK once
-             or derive from domain (fintech=blue, health=teal, luxury=gold, dev-tool=violet/orange).
+--accent:    ONE evidence-backed brand color selected by references/palette.md.
              NEVER default to green/emerald. Budget ≤10% of any viewport.
 Radius: 8 inputs / 12 cards / 16 modals / full pills.  Spacing: 4-scale, ≥96px between landing sections.
 Depth: layering + inset top-light `0 1px 0 rgba(255,255,255,.04)`; drop shadows ONLY on floating layers.
@@ -153,9 +154,15 @@ circles in 8 hues · heavy card shadows · bounce-in animations · centered
 feature-grid walls · fake dashboard screenshots · multiple accent colors ·
 full-page spinners. If it looks like a template, delete it.
 
+Generic copy is also an AI tell: no “revolutionize,” “unlock,” “seamless,” or
+unsupported superlatives. Headlines name the user's outcome; proof uses real
+product behavior, data, screenshots, or attributed quotes. A premium page has
+one visual thesis, one typographic voice, and details specific to its subject.
+
 ## 9. Review checklist (UI may not ship failing any)
 
 - [ ] One accent, ≤10% viewport; near-monochrome otherwise
+- [ ] Palette direction cites its evidence; green appears only when justified
 - [ ] Hairlines not shadows; top-light insets; correct radii
 - [ ] Type scale + serif-italic accent used once per headline; tabular numerals
 - [ ] Motion: springs/expo, staggered, reduced-motion fallback, no layout thrash
@@ -163,3 +170,4 @@ full-page spinners. If it looks like a template, delete it.
 - [ ] Components sourced from registry, restyled to tokens
 - [ ] Dark AND light themes resolve; responsive at 360/768/1280
 - [ ] Zero anti-style items present
+- [ ] Public page passes the web-quality Playwright checks or records blockers

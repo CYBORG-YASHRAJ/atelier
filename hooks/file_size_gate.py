@@ -6,6 +6,8 @@ ponytail: PostToolUse corrective (file already written); upgrade to PreToolUse
 deny only if oversized files ever actually ship.
 """
 import json, sys, os
+from pathlib import Path
+from patch_paths import affected
 
 SOFT, HARD = 250, 350
 EXEMPT_EXT = {".md", ".mdx", ".txt", ".json", ".yaml", ".yml", ".toml", ".lock",
@@ -15,10 +17,10 @@ EXEMPT_PARTS = ("node_modules", "migrations", "generated", ".min.", "dist", "bui
 
 def check(path):
     ext = os.path.splitext(path)[1].lower()
-    if ext in EXEMPT_EXT or any(p in path for p in EXEMPT_PARTS):
+    if ext in EXEMPT_EXT or any(p in Path(path).parts for p in EXEMPT_PARTS) or ".min." in Path(path).name:
         return None
     try:
-        words = len(open(path, encoding="utf-8", errors="ignore").read().split())
+        words = len(Path(path).read_text(encoding="utf-8", errors="ignore").split())
     except OSError:
         return None
     if words > HARD:
@@ -32,15 +34,17 @@ def check(path):
 
 
 def main():
-    data = json.load(sys.stdin)
-    path = (data.get("tool_input") or {}).get("file_path", "")
-    msg = check(path) if path else None
-    if msg and msg.startswith("BLOCK"):
-        print(msg, file=sys.stderr)
+    try:
+        data = json.load(sys.stdin)
+        messages = [msg for path in affected(data) if (msg := check(path))]
+    except (ValueError, TypeError, AttributeError, OSError):
+        messages = ["Atelier: invalid hook payload; run the review size audit."]
+    if messages:
+        print(json.dumps({"hookSpecificOutput": {
+            "hookEventName": "PostToolUse", "additionalContext": "\n".join(messages)}}))
+    if any(msg.startswith("BLOCK") for msg in messages):
+        print("\n".join(messages), file=sys.stderr)
         sys.exit(2)
-    if msg:
-        print(msg)
-    sys.exit(0)
 
 
 if __name__ == "__main__":
@@ -49,7 +53,7 @@ if __name__ == "__main__":
         f = tempfile.NamedTemporaryFile("w", suffix=".py", delete=False)
         f.write("x " * 400); f.close()
         assert "BLOCK" in check(f.name)
-        assert check(f.name.replace(".py", ".md")) is None or True
+        assert check(f.name.replace(".py", ".md")) is None
         os.unlink(f.name); print("self-check ok")
     else:
         main()

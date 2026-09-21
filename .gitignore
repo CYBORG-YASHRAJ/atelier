@@ -11,6 +11,10 @@ workspace/
 
 # junk
 node_modules/
+playwright-report/
+test-results/
+.test-work/
+dist/
 __pycache__/
 *.pyc
 .DS_Store

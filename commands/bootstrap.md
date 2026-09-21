@@ -1,35 +1,7 @@
 ---
-description: One-shot Atelier setup — workspace, SQLite store, environment doctor, companion tools. Run once per project.
+description: Initialize Atelier project state and check dependencies and optional integrations.
 ---
 
-Set up Atelier in this repository. Do everything yourself; ask the user only
-for secrets you cannot detect.
+Run Atelier bootstrap for: $ARGUMENTS
 
-1. **Probe the environment** (node, python3, git, docker, ffmpeg, pnpm/uv) and
-   record each result: after init, `python "${CLAUDE_PLUGIN_ROOT}/db/store.py"
-   exec "INSERT OR REPLACE INTO capabilities VALUES ('<name>',<0|1>,'<version>',datetime('now'))"`.
-2. **Create the store**: `python "${CLAUDE_PLUGIN_ROOT}/db/store.py" init` —
-   creates `workspace/atelier.db` with schema + seeded rules/registry. Add
-   `workspace/` to the project `.gitignore` if missing.
-3. **Verify companions**: the plugin BUNDLES the shadcn, magicui, aceternityui,
-   and reactbits MCP servers (`.mcp.json` at plugin root — they register on
-   install; first call npx-fetches them). Verify each responds; update
-   `registry` rows' meta. For the rest (ponytail plugin, code-review-graph,
-   github-mcp; threejs-devtools-mcp only in 3D-heavy projects): offer the
-   install and ask a yes/no confirmation — never install silently. If one needs a token (github-mcp PAT; optional
-   `GITHUB_TOKEN` lifts reactbits to 5k req/hr), ask the user to paste it in
-   chat, write it to the project `.env` (gitignored — verify), and pass it via
-   `claude mcp add … -e KEY=value`. If code-review-graph is installed but
-   unindexed, run `code-review-graph build`.
-4. **Credentials (optional — never block on this)**: ask ONE question — how to
-   connect Google AI for media generation: (a) public Gemini API key →
-   `GOOGLE_API_KEY`, (b) Vertex AI → paste the service-account JSON **path** →
-   `GOOGLE_APPLICATION_CREDENTIALS` + `GOOGLE_CLOUD_PROJECT` +
-   `GOOGLE_CLOUD_LOCATION=global`, or (c) skip. Write choices to the project
-   `.env` (create it; confirm `.env` is gitignored). Keys NEVER go in the
-   SQLite store or committed files. On skip: say "no token — media generation
-   will use the paste-prompt fallback" and continue.
-5. **Report**: a compact table — capabilities found, store path, companions
-   available/missing (with the one-line install for anything missing),
-   credentials mode (public / vertex / none).
-6. Offer next step: `/atelier:plan` to run project intake.
+Using the supplied CLAUDE_PLUGIN_ROOT as PLUGIN, read references/runtime.md and references/workflows/bootstrap.md from that root. Follow the Claude adapter, preserve the selected project directory, and perform only this workflow.
