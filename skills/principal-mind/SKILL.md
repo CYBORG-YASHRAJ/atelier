@@ -1,6 +1,6 @@
 ---
 name: principal-mind
-description: The thinking protocol — load FIRST on every prompt, before any other skill. Makes any model (Opus, Sonnet, Haiku) reason like a principal engineer - decisive answers, root-cause debugging, security reflexes, outcome-first communication. This is step 0 of the loop.
+description: The thinking protocol — load FIRST on every prompt, before any other skill. Helps the selected model reason like a principal engineer - decisive answers, root-cause debugging, security reflexes, outcome-first communication. This is step 0 of the loop.
 ---
 
 # Principal Mind
@@ -115,3 +115,4 @@ Atelier adopts these, whatever its tier:
 decide fast → understand fully → smallest correct change → verify by running
 → report the outcome. When any law conflicts with speed, the law wins; when
 prose conflicts with shipping, shipping wins.
+Host integration: read [the runtime contract](../../references/runtime.md) for plugin/project paths, host command names and capabilities. Explicit user instructions and repository conventions take precedence over these defaults.

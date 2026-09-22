@@ -22,6 +22,7 @@ loading states all get a static webp poster — always ship the fallback.
 | Svelte project | **Threlte** (threlte.xyz) — `npm i three @threlte/core @threlte/extras` |
 | Vanilla / any other framework | **three.js** directly |
 | Keyframe / scroll-driven cinematic sequencing | **Theatre.js** — `@theatre/core` (runtime) + `@theatre/studio` (DEV ONLY — never in the prod bundle) + `@theatre/r3f` bridge |
+| Photoreal scroll narrative from rendered frames | **asset-pipeline frame sequence** — canvas scrub with chunked decode; cheaper and more predictable than live 3D |
 | Client wants a no-code 3D site | **PeachWeb** (peachweb.io) — paid visual builder, exports embeds for any platform |
 
 ## Spline embed (the fast path — this IS the integration; ignore "Spline MCP" servers, Spline has no public API)
@@ -66,9 +67,25 @@ for continuous animation. Threlte mirrors this: `<Canvas>` from
 - Dispose on unmount (drei/Threlte handle it; raw three.js: `geometry.dispose()`, `material.dispose()`, `renderer.dispose()`).
 - Poster fallback (webp via asset-pipeline) for reduced-motion, mobile, and load — the page must read perfectly with 3D absent.
 
+## Scroll narrative composition
+
+Use three depth planes at most: a slow atmospheric backdrop, the primary frame
+sequence or 3D subject, and crisp semantic copy/chrome. Map all planes to one
+normalized scroll progress; vary distance and easing instead of adding unrelated
+animations. Pin only while the scene advances, then return to normal document
+flow. Avoid scroll hijacking, wheel interception, and fake smooth-scroll latency.
+
+Choose rendered frames for photoreal materials, fluid simulation, cinematic
+lighting, or model-heavy scenes that do not need object interaction. Choose live
+3D only when the user must rotate, select, configure, or inspect the object.
+Never run live WebGL behind a full frame sequence. On mobile, reduce parallax,
+serve a deliberate crop, and shorten the pinned distance. Follow the detailed
+loading, poster, accessibility, and SEO contract in asset-pipeline.
+
 ## Live-scene debugging (optional MCP companion)
 
-`claude mcp add threejs-devtools-mcp -- npx threejs-devtools-mcp` — inspects
+Register `npx threejs-devtools-mcp` with the current host's MCP setup — inspects
 and edits a RUNNING three.js/R3F scene (59 tools, MIT) through a WebSocket
 bridge; needs the project dev server up. Offer with yes/no confirmation per
 bootstrap — useful only in 3D-heavy projects.
+Host integration: read [the runtime contract](../../references/runtime.md) for plugin/project paths, host command names and capabilities. Explicit user instructions and repository conventions take precedence over these defaults.

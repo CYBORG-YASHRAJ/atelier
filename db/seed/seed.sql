@@ -5,7 +5,7 @@ INSERT INTO rules (domain,key,value,source) VALUES
  ('code','dry','check graph/repo first; import, never rewrite; fix bugs in the shared function','core'),
  ('code','comments','sparse, intent-only; no narration; ponytail: notes for deliberate ceilings','core'),
  ('design','accent_budget','ONE brand accent, <=10% of any viewport','core'),
- ('design','accent_select','the accent is DATA, never a default: take it from project intake / logo / brand. If none is given, ASK once, or derive from the domain (fintech=blue, health=teal, luxury=gold, dev-tool=violet/orange). NEVER reflexively pick green/emerald - that is the AI-slop tell. Emerald is ONE example brand, not the house color','core'),
+ ('design','accent_select','choose one accent through skills/design-law/references/palette.md: explicit brand, assets/tokens, product context, then category prior. Record the evidence and light/dark values. Green/emerald requires direct brand or subject evidence; status green and old Atelier examples are never palette evidence','core'),
  ('design','theming','all colors as CSS variables in globals.css; semantic tokens in components; NEVER hardcode hex or per-page dark: overrides','core'),
  ('design','icons','Lucide 1.5px monochrome currentColor only; accent only on state','core'),
  ('design','motion','ease-out-expo entrances; springs 260/32/.9; stagger 60-80ms; reduced-motion fallback; transform/opacity only','core'),
@@ -47,7 +47,7 @@ INSERT OR REPLACE INTO registry (kind,name,source,install,usage,meta) VALUES
  ('component','ReactBits','https://reactbits.dev','MCP bundled with atelier (GITHUB_TOKEN optional, lifts rate limit)','micro-interaction components','animated,bundled-mcp'),
  ('component','Motion.dev','https://motion.dev','npm i motion','springs, layout morphs; AI Kit (MCP+skills, 400+ examples) exists but needs a paid Motion+ token - do NOT bundle it; free docs at motion.dev/llms.txt','animated'),
  ('component','MagicUI','https://magicui.design','MCP bundled with atelier / npx magicui-cli add','marketing components; token restyle required','animated,dark,bundled-mcp'),
- ('skill','ponytail','github:ponytail','/plugin install ponytail','minimalism enforcement on every coding task',''),
+ ('skill','ponytail','github:ponytail','install ponytail through the current host if available','minimalism enforcement on every coding task',''),
  ('skill','ui-ux-pro-max','local skill','installed','style/palette/font intelligence for UI work',''),
  ('skill','Apple Design','https://github.com/emilkowalski/skills (MIT)','bundled with atelier — skills/apple-design/SKILL.md','deep gesture physics: springs (damping/response), interruptible/velocity-handoff animation, momentum projection, rubber-banding, translucent materials, optical typography, WWDC 8 design principles',''),
  ('mcp','code-review-graph','local','code-review-graph build','structural graph: impact radius, callers, tests-for',''),
@@ -72,7 +72,7 @@ INSERT OR REPLACE INTO registry (kind,name,source,install,usage,meta) VALUES
  ('component','Threlte','https://threlte.xyz','npm i three @threlte/core @threlte/extras','Svelte renderer for three.js; extras mirror drei','3d,free'),
  ('component','Theatre.js','https://www.theatrejs.com','npm i @theatre/core @theatre/studio','keyframe/scroll-driven 3D sequencing; studio is DEV ONLY; @theatre/r3f bridge','3d,animated,free'),
  ('site','PeachWeb','https://peachweb.io','visual builder, exports embeds','no-code 3D website builder (WebGL); for clients who want 3D without code','3d,paid'),
- ('tool','threejs-devtools-mcp','npm:threejs-devtools-mcp','claude mcp add threejs-devtools-mcp -- npx threejs-devtools-mcp','inspect/edit a running three.js scene from the agent (59 tools); needs dev server up','3d,mcp');
+ ('tool','threejs-devtools-mcp','npm:threejs-devtools-mcp','register npx threejs-devtools-mcp with the current host','inspect/edit a running three.js scene from the agent (59 tools); needs dev server up','3d,mcp');
 
 DELETE FROM framework_map;
 INSERT INTO framework_map (path,kind,purpose,load_when,links) VALUES
@@ -88,6 +88,7 @@ INSERT INTO framework_map (path,kind,purpose,load_when,links) VALUES
  ('skills/asset-pipeline/SKILL.md','skill','webp/frames tools, scrollytelling recipe, video/logo generation credential ladder + universal prompts; sibling Cloudflare Workers AI image route (free native @cf/... models vs billed BYOK gpt-image-2)','images, video, logo/brand-mark generation, media, storytelling sections','assets.py,ScrollScrub,design-law'),
  ('skills/living-graphics/SKILL.md','skill','continuous component animations: SVG flow schematics, traveling packets, pulsing nodes, state-reactive micro-experiences, Rive/Lottie option','animated cards, data-flow diagrams, dynamic infographics, ambient/continuous/loop animation, micro-interactions','design-law,asset-pipeline'),
  ('skills/docs-site/SKILL.md','skill','Astro Starlight docs-site recipe: separate repo, base path, token restyle, MDX vs md, Pages deploy workflow','documentation site, docs, knowledge base, developer guides, MDX','design-law,deploy-advisor'),
+ ('skills/web-quality/SKILL.md','skill','public-site SEO, accessibility, responsive, performance and Playwright release contract','public website, landing page, docs, SEO, accessibility or web release review','design-law,playwright'),
  ('skills/web-3d/SKILL.md','skill','live 3D: Spline embed recipe, R3F/Threlte/three.js ladder, Theatre.js sequencing, 3D icons, performance laws, poster fallbacks','ANY 3D work — 3D hero, 3D icons, product viewer, WebGL, Spline, scroll-driven 3D','design-law,asset-pipeline,registry'),
  ('skills/stack-guides/nextjs.md','skill','Next.js decision rules + 5 agent mistakes','frontend work in Next.js','structure-law,design-law'),
  ('skills/stack-guides/fastapi.md','skill','FastAPI decision rules + 5 agent mistakes','Python backend/AI service work','structure-law'),
@@ -98,15 +99,28 @@ INSERT INTO framework_map (path,kind,purpose,load_when,links) VALUES
  ('skills/mcp-maker/SKILL.md','skill','ladder for integrating any site/library: registry row -> skill -> MCP server','adding a new component site, library, or API to Atelier','registry'),
  ('skills/anime-js/SKILL.md','skill','Anime.js v4 API: animate/createTimeline/stagger, SVG morph+draw, draggable, onScroll, splitText, springs, React scope','JS animation not covered by Framer Motion: timelines, SVG morph/draw, draggable, motion paths, text splitting','design-law,living-graphics,registry'),
  ('skills/apple-design/SKILL.md','skill','Apple WWDC fluid-interface physics: response/latency, direct manipulation, interruptibility, spring damping/response, velocity handoff, momentum projection, rubber-banding, materials, optical typography, 8 design principles (Emil Kowalski, MIT, bundled unmodified)','ANY gesture-driven UI — drag/swipe/sheet/drawer, spring animation, momentum scroll/snap, translucent chrome, interruptible transitions; pairs with design-law motion system','design-law,framer-motion,registry'),
- ('agents/architect.md','agent','Opus planner: architecture + done-state contracts, never codes','/atelier:plan; architectural holes during build','loop-engine'),
- ('agents/builder.md','agent','Sonnet executor: implements plan tasks under all laws','/atelier:build task execution','loop-engine,clean-code-law'),
- ('agents/summarizer.md','agent','Haiku: digests, store updates, trivial edits','summaries, memory persistence, mechanical edits',''),
- ('agents/learner.md','agent','Sonnet ingester: references -> overlays + registry rows, never touches core','/atelier:learn ingestion','gateway'),
+ ('agents/architect.md','agent','Architect: architecture + done-state contracts, never codes','Atelier plan; architectural holes during build','loop-engine'),
+ ('agents/builder.md','agent','Builder: implements plan tasks under all laws','Atelier build task execution','loop-engine,clean-code-law'),
+ ('agents/summarizer.md','agent','Summarizer: digests, store updates, trivial edits','summaries, memory persistence, mechanical edits',''),
+ ('agents/learner.md','agent','Learner: references -> overlays + registry rows, never touches core','Atelier learn ingestion','gateway'),
  ('agents/design-scout.md','agent','parallel scout: studies premium component source (Aceternity/ReactBits/MagicUI) and returns technique briefs + durable rules','spawn alongside any UI build/plan task','design-law,registry,builder'),
  ('db/store.py','tool','SQLite CLI: init/rules/registry/map/sql/exec, TOON-style pipe rows','reading rules, plans, criteria, registry, this map',''),
  ('mcp/assets/assets.py','tool','image->webp, video->webp frames','optimizing any raster; scrollytelling frames','asset-pipeline'),
  ('hooks/file_size_gate.py','tool','enforces 250/350-word file law on every write','automatic (PostToolUse hook)','clean-code-law'),
  ('hooks/session_start.py','tool','resumes active plan + unmet criteria on session start','automatic (SessionStart hook)','loop-engine'),
  ('templates/ScrollScrub.tsx','template','canvas scroll-scrubbed frame sequence component','building scrollytelling sections','asset-pipeline'),
+ ('templates/scrollFrames.ts','template','chunked directional frame loader with bounded cache and device fallbacks','building scrollytelling sections','asset-pipeline,ScrollScrub'),
  ('docs/REQUIREMENTS.md','doc','full product spec: what Atelier is and why','understanding scope; contributor onboarding',''),
- ('docs/IMPLEMENTATION-PLAN.md','doc','architecture, schema, phased build plan with gates','planning framework changes; contributor onboarding','');
+ ('references/runtime.md','doc','host adapters and shared state contract','any Atelier workflow','');
+INSERT INTO framework_map(path,kind,purpose,load_when,links) VALUES
+ ('skills/atelier-bootstrap/SKILL.md','skill','Atelier bootstrap workflow','bootstrap','references/runtime.md'),
+ ('skills/atelier-plan/SKILL.md','skill','Atelier plan workflow','plan','references/runtime.md'),
+ ('skills/atelier-clarify/SKILL.md','skill','Atelier clarify workflow','clarify','references/runtime.md'),
+ ('skills/atelier-build/SKILL.md','skill','Atelier build workflow','build','references/runtime.md'),
+ ('skills/atelier-review/SKILL.md','skill','Atelier review workflow','review','references/runtime.md'),
+ ('skills/atelier-learn/SKILL.md','skill','Atelier learn workflow','learn','references/runtime.md'),
+ ('skills/atelier-promote/SKILL.md','skill','Atelier promote workflow','promote','references/runtime.md'),
+ ('skills/atelier-ship/SKILL.md','skill','Atelier ship workflow','ship','references/runtime.md'),
+ ('skills/atelier-status/SKILL.md','skill','Atelier status workflow','status','references/runtime.md'),
+ ('skills/atelier-doctor/SKILL.md','skill','Atelier doctor workflow','doctor','references/runtime.md'),
+ ('skills/atelier-update/SKILL.md','skill','Atelier update workflow','update','references/runtime.md');

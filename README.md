@@ -23,9 +23,9 @@ three:
   page edits), a component registry the agent picks from. The "AI-slop template
   look" is named and banned.
 - **Clean-code law** — 250 words per file, enforced by a hook, not a hope.
-- **Automatic model routing** — Opus plans, Sonnet builds, Haiku summarizes,
-  a parallel design-scout studies premium component source while you build,
-  and a learner ingests your references. You never switch models manually.
+- **Role-aware execution** — Claude uses pinned Opus/Sonnet/Haiku roles; Codex
+  keeps the user's selected model while applying the same architect, builder,
+  summarizer, learner, and design-scout responsibilities.
 - **Token-cheap memory + framework graph** — rules, plans, and registries live
   in SQLite rows served as lean pipe-rows, and `store.py map <topic>` resolves
   which skill/tool to load in one ~30-token query instead of directory scans.
@@ -47,6 +47,17 @@ three:
 Requirements: Python 3.10+ on PATH. Optional: ffmpeg (video frames),
 Pillow (image compression), a Google AI key (media generation).
 
+## Install (Codex)
+
+```text
+codex plugin marketplace add INERATE/atelier
+codex plugin add atelier@atelier-codex
+```
+
+Restart Codex, review Atelier's hooks with `/hooks`, then start with
+`$atelier-bootstrap` and `$atelier-plan <what you want to build>`. See
+[the Codex guide](docs/CODEX.md) for local development and verification.
+
 ## Start (in your project folder)
 
 ```
@@ -57,7 +68,7 @@ Pillow (image compression), a Google AI key (media generation).
 
 `plan` runs intake (paste a project doc or answer one batch of questions —
 stack, layout, auth mode, hosting with real costs, your ONE brand accent),
-then the Opus architect writes the architecture and a **done-state contract**
+then the architect role writes the architecture and a **done-state contract**
 into the store. Then:
 
 ```
@@ -105,12 +116,10 @@ your taste, and your taste can't corrupt the core.
 
 ## Status
 
-Phases 0–5 landed: 13 skills (laws + principal-mind + mcp-maker + 5 stack
-guides), 5 model-pinned agents (architect, builder, summarizer, learner,
-design-scout), 11 commands, enforcement hooks, CI, the SQLite store with a
-27-node framework map, the asset pipeline, and self-learning overlays.
-Open items: the media-generation daemon (gRPC) and broader cross-runtime
-adapters.
+Atelier ships the full 11-workflow surface for Claude Code and Codex, shared
+skills and role instructions, corrective hooks, cross-platform CI, persistent
+SQLite contracts, the asset pipeline, and self-learning overlays. The optional
+media-generation daemon (gRPC) remains future work.
 
 ## Contributing
 

@@ -1,15 +1,7 @@
 ---
-description: Final release gate — verify the entire done-state contract with evidence, then produce the ship report.
+description: Verify an Atelier plan's release criteria and record its ship report.
 ---
 
-Run the Atelier ship gate for the active plan:
+Run Atelier ship for: $ARGUMENTS
 
-1. Re-run `/atelier:review` gates fresh — no trusting stale evidence.
-2. Verify EVERY `done_criteria` row: automated kinds re-executed now; manual
-   kinds confirmed by the user in this conversation (quote their confirmation
-   as evidence).
-3. Any criterion unmet → NOT shippable. List exactly what's missing and stop.
-4. All met → mark the plan `status='shipped'`, write an `activity_log` entry,
-   and produce the ship report: what was built, evidence per criterion,
-   deployment steps (deploy-advisor) with costs, and post-ship checks
-   (monitoring, error tracking, cache behavior).
+Using the supplied CLAUDE_PLUGIN_ROOT as PLUGIN, read references/runtime.md and references/workflows/ship.md from that root. Follow the Claude adapter, preserve the selected project directory, and perform only this workflow.

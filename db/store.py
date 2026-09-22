@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Atelier store CLI. Token-lean pipe-row output (TOON-style), not JSON.
 
-  store.py init [workspace_dir]      create db + schema + seed
+  store.py init                      create db + schema + seed
   store.py rules <domain>            active rules for a domain
   store.py registry <kind>           registry rows of a kind
   store.py map [topic]               framework graph: which file to load for a topic
@@ -9,25 +9,22 @@
   store.py exec "<INSERT/UPDATE>"    write statement
 """
 import sqlite3, sys, os
+from contextlib import closing
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import runtime
+from initialize import initialize
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-DB = os.environ.get("ATELIER_DB") or os.path.join(os.getcwd(), "workspace", "atelier.db")
+DB = runtime.database()
 
 
-def connect():
-    os.makedirs(os.path.dirname(DB), exist_ok=True)
-    c = sqlite3.connect(DB)
-    c.execute("PRAGMA journal_mode=WAL")
-    return c
+def connect(writable=False, create=False):
+    return runtime.connect(DB, writable=writable, create=create)
 
 
 def init():
-    c = connect()
-    for f in ("schema.sql", os.path.join("seed", "seed.sql")):
-        p = os.path.join(ROOT, f)
-        if os.path.exists(p):
-            c.executescript(open(p, encoding="utf-8").read())
-    c.commit()
+    with closing(connect(writable=True, create=True)) as c:
+        initialize(c)
     print(f"ok|{DB}")
 
 
@@ -43,7 +40,13 @@ def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "help"
     if cmd == "init":
         return init()
-    c = connect()
+    if cmd == "help":
+        return print(__doc__)
+    with closing(connect(writable=cmd == "exec")) as c:
+        dispatch(c, cmd)
+
+
+def dispatch(c, cmd):
     if cmd == "rules":
         rows(c, "SELECT key,value,source FROM rules WHERE domain=? AND active=1", (sys.argv[2],))
     elif cmd == "registry":
@@ -61,4 +64,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (sqlite3.Error, OSError, IndexError, ValueError) as error:
+        sys.exit(f"Atelier store: {error}. Run Atelier doctor for diagnostics.")
