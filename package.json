@@ -1,0 +1,13 @@
+{
+  "name": "atelier-contributor-checks",
+  "private": true,
+  "version": "0.5.0",
+  "scripts": {
+    "audit:site": "playwright test",
+    "audit:site:update": "playwright test --update-snapshots"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0"
+  }
+}

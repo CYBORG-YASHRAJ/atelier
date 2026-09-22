@@ -26,11 +26,31 @@ credentials. Photos / complex subjects: `pip install rembg`, then
 
 ## Scrollytelling recipe (the storytelling primitive)
 
-1. Get an mp4 (user-provided in `workspace/references/video/`, or generate — below).
-2. `assets.py frames video.mp4 24` → `video_frames/frame_0001.webp …`
-3. Copy frames to `public/frames/<name>/`; use `templates/ScrollScrub.tsx`
-   (canvas scrub, sticky viewport). `prefers-reduced-motion` → static poster.
-4. Design-law still applies: ONE hero moment per page.
+1. Storyboard scroll beats first: entry, 2–4 transitions, resolution, and the
+   content pinned beside each beat. Motion supports the story; it is not a
+   decorative loop.
+2. Get one continuous 5–8 second source clip (user-provided in
+   `workspace/references/video/`, or generate below). Locked camera direction,
+   constant motion, and no cuts produce clean bidirectional scrubbing.
+3. `assets.py frames video.mp4 24` → `video_frames/frame_0001.webp …`.
+   Produce desktop and mobile crops when composition cannot safely center-crop.
+4. Copy frames to `public/frames/<name>/`; use `templates/ScrollScrub.tsx`.
+   It loads a small window around scroll position, favors scroll direction,
+   evicts distant frames, caps DPR, and draws cover-fit through one canvas.
+5. Ship a meaningful poster. Reduced-motion, save-data, low-memory devices,
+   failed decoding, and no JavaScript receive that poster and the complete
+   narrative as ordinary semantic HTML.
+6. Keep headings, copy, links, and calls to action outside canvas/WebGL so they
+   remain selectable, accessible, indexable, and stable before frames arrive.
+7. Design-law still applies: one cinematic sequence per page. Run web-quality
+   checks for overflow, reduced motion, accessibility, metadata, and SEO.
+
+Frame delivery is progressive. Load frame zero immediately, then a bounded
+forward/backward chunk near the target. Never create every `Image` at mount for
+a long sequence. Use immutable, content-hashed frame URLs with long cache
+headers; do not lazy-load the poster or first frame. Decode before draw, render
+at most once per animation frame, and recalculate canvas size through
+`ResizeObserver`, not layout reads on every scroll event.
 
 ## AI video generation — the ladder (never exit on missing credentials)
 
@@ -105,7 +125,7 @@ Never store keys in the SQLite store or any committed file.
 > **Specs:** 5–8 seconds, 16:9, highest detail.
 
 Tell the user: paste into the Gemini app, download the mp4, drop it in
-`workspace/references/video/`, then run `/atelier:build` to continue — the
+`workspace/references/video/`, then run `Atelier build` to continue — the
 pipeline handles frames automatically. If Gemini refuses, simplify the Subject
 line (concrete object, neutral scene) and retry once.
 
@@ -196,3 +216,4 @@ gradients, 3D, or mascots.
 
 If the output has clutter, append: "absolutely no background texture, no
 reflections — mark and wordmark only," and retry once.
+Host integration: read [the runtime contract](../../references/runtime.md) for plugin/project paths, host command names and capabilities. Explicit user instructions and repository conventions take precedence over these defaults.

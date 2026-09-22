@@ -24,7 +24,8 @@ to by the store. This skill tells you what to read, in order.
 
 - Never edit core law files at runtime. New taste = new overlay file in
   `workspace/overlays/` + a `design_guide_versions` row (the learner agent's
-  job, via `/atelier:learn`).
+  job, via `Atelier learn`).
 - Conflicting overlays: newest wins; note the conflict to the user.
 - Promotion to core is a deliberate human act (a future
-  `/atelier:promote`), never automatic.
+  `Atelier promote`), never automatic.
+Host integration: read [the runtime contract](../../references/runtime.md) for plugin/project paths, host command names and capabilities. Explicit user instructions and repository conventions take precedence over these defaults.

@@ -8,8 +8,8 @@ description: The Atelier Design Law — premium, industrial-grade UI. Load BEFOR
 When a prompt says "make it premium", it means **exactly this document**. If a
 choice isn't covered, pick the calmer, quieter option. First run the gateway
 skill — overlays in `design_guide_versions` may extend this law. Before UI code,
-read [palette inference](references/palette.md) and record its short design
-direction.
+read [palette inference](references/palette.md) and write the short design
+direction it requires. Public pages also load the web-quality skill.
 
 ## 1. Vocabulary (say these words, get this taste)
 
@@ -155,6 +155,11 @@ circles in 8 hues · heavy card shadows · bounce-in animations · centered
 feature-grid walls · fake dashboard screenshots · multiple accent colors ·
 full-page spinners. If it looks like a template, delete it.
 
+Generic copy is also an AI tell: no “revolutionize,” “unlock,” “seamless,” or
+unsupported superlatives. Headlines name the user's outcome; proof uses real
+product behavior, data, screenshots, or attributed quotes. A premium page has
+one visual thesis, one typographic voice, and details specific to its subject.
+
 ## 9. Review checklist (UI may not ship failing any)
 
 - [ ] One accent, ≤10% viewport; near-monochrome otherwise
@@ -166,3 +171,4 @@ full-page spinners. If it looks like a template, delete it.
 - [ ] Components sourced from registry, restyled to tokens
 - [ ] Dark AND light themes resolve; responsive at 360/768/1280
 - [ ] Zero anti-style items present
+- [ ] Public page passes the web-quality Playwright checks or records blockers

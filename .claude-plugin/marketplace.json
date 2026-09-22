@@ -1,5 +1,6 @@
 {
   "name": "atelier-marketplace",
+  "description": "Atelier's shared planning, design, build, review, and project-memory workflows.",
   "owner": { "name": "Piyush Sharma (ScienHAC)", "url": "https://github.com/ScienHAC" },
   "plugins": [
     {

@@ -1,6 +1,6 @@
 ---
 name: anime-js
-description: Anime.js v4 — fast, tree-shakeable JS animation. Load for JS animation that Framer Motion doesn't cover well: multi-target timelines, SVG morph/line-draw, draggable with spring release, motion paths, scroll-scrub, staggered grids, and text splitting. Triggers on "anime.js"/"animejs", timeline, stagger, SVG morph, draw/drawable, motion path, draggable, splitText.
+description: "Anime.js v4 animation guidance for timelines, SVG motion, draggable interactions, motion paths, scroll effects, staggering, and text splitting."
 ---
 
 # Anime.js v4
